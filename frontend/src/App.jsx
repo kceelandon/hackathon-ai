@@ -1,43 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 import Button from '@mui/material/Button';
 import YelpCard from './components/YelpCard';
 
 function App() {
-    const [city, setCity] = useState("seattle");
-    const [radius, setRadius] = useState("");
-    const [cuisine, setCuisine] = useState("");
-    const [numRestaurants, setNumRestaurants] = useState(1);
-    const data = {
-      city:city,
-      radius: radius,
-      cuisine: cuisine, 
-      numRestaurants: numRestaurants
-    }
-    const handleSubmit = async (e) => {
-      e.preventDefault()
+  const [city, setCity] = useState("seattle");
+  const [radius, setRadius] = useState(1); // Changed to a number
+  const [cuisine, setCuisine] = useState("");
+  const [numRestaurants, setNumRestaurants] = useState(1);
+
+  const data = {
+    city: city,
+    radius: radius,
+    cuisine: cuisine,
+    numRestaurants: numRestaurants
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
       let req = await fetch('http://127.0.0.1:5000/findfood', {
         method: "POST",
         headers: {
-                'Content-Type': 'application/json', // Set content type to JSON
-            },
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(data)
+      });
 
-      })
-      let reqData = await req.json()
-      console.log(reqData)
+      let reqData = await req.json();
+      console.log(reqData);
       console.log({
         city,
         radius,
         cuisine,
         numRestaurants,
       });
-    };
-  
-    return (
-      <div className="grid justify-center">
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  return (
+    <div className="grid grid-cols-3 justify-center">
+      <div className='col-span-1 p-4'>
         <h1 className="text-5xl font-bold">Food Crawler</h1>
         <div className="grid grid-rows-4 gap-4 mt-4">
           <div>
@@ -67,7 +72,7 @@ function App() {
               id="radius"
               name="radius"
               value={radius}
-              onChange={(e) => setRadius(e.target.value)}
+              onChange={(e) => setRadius(Number(e.target.value))}
               placeholder="Enter Radius"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
@@ -103,22 +108,21 @@ function App() {
           </div>
           <div className="flex justify-center mt-4">
             <button
-              type="button"
+              type="submit" // Change to 'submit' type
               onClick={handleSubmit}
               className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               Submit
             </button>
-
           </div>
         </div>
       </div>
       <div className='col-span-2 grid p-4'>
-          {/* <h1 className='text-3xl bold'>Search to find a food crawl for you!</h1> */}
-          <YelpCard />
+        {/* <h1 className='text-3xl bold'>Search to find a food crawl for you!</h1> */}
+        <YelpCard />
       </div>
     </div>
   );
 }
 
-export default App
+export default App;
