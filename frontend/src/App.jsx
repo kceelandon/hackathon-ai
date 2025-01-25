@@ -6,23 +6,38 @@ import Button from '@mui/material/Button';
 import YelpCard from './components/YelpCard';
 
 function App() {
-  const [city, setCity] = useState("seattle");
-  const [radius, setRadius] = useState("");
-  const [cuisine, setCuisine] = useState("");
-  const [numRestaurants, setNumRestaurants] = useState(1);
+    const [city, setCity] = useState("seattle");
+    const [radius, setRadius] = useState("");
+    const [cuisine, setCuisine] = useState("");
+    const [numRestaurants, setNumRestaurants] = useState(1);
+    const data = {
+      city:city,
+      radius: radius,
+      cuisine: cuisine, 
+      numRestaurants: numRestaurants
+    }
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      let req = await fetch('http://127.0.0.1:5000/findfood', {
+        method: "POST",
+        headers: {
+                'Content-Type': 'application/json', // Set content type to JSON
+            },
+        body: JSON.stringify(data)
 
-  const handleSubmit = () => {
-    console.log({
-      city,
-      radius,
-      cuisine,
-      numRestaurants,
-    });
-  };
-
-  return (
-    <div className="grid grid-cols-3 justify-center">
-      <div className='col-span-1 p-4'>
+      })
+      let reqData = await req.json()
+      console.log(reqData)
+      console.log({
+        city,
+        radius,
+        cuisine,
+        numRestaurants,
+      });
+    };
+  
+    return (
+      <div className="grid justify-center">
         <h1 className="text-5xl font-bold">Food Crawler</h1>
         <div className="grid grid-rows-4 gap-4 mt-4">
           <div>
