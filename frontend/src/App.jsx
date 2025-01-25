@@ -3,24 +3,26 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Button from '@mui/material/Button';
+import YelpCard from './components/YelpCard';
 
 function App() {
-    const [city, setCity] = useState("seattle");
-    const [radius, setRadius] = useState("");
-    const [cuisine, setCuisine] = useState("");
-    const [numRestaurants, setNumRestaurants] = useState(1);
-  
-    const handleSubmit = () => {
-      console.log({
-        city,
-        radius,
-        cuisine,
-        numRestaurants,
-      });
-    };
-  
-    return (
-      <div className="grid justify-center">
+  const [city, setCity] = useState("seattle");
+  const [radius, setRadius] = useState("");
+  const [cuisine, setCuisine] = useState("");
+  const [numRestaurants, setNumRestaurants] = useState(1);
+
+  const handleSubmit = () => {
+    console.log({
+      city,
+      radius,
+      cuisine,
+      numRestaurants,
+    });
+  };
+
+  return (
+    <div className="grid grid-cols-3 justify-center">
+      <div className='col-span-1 p-4'>
         <h1 className="text-5xl font-bold">Food Crawler</h1>
         <div className="grid grid-rows-4 gap-4 mt-4">
           <div>
@@ -41,7 +43,6 @@ function App() {
               <option value="las-vegas">Las Vegas</option>
             </select>
           </div>
-
           <div>
             <label htmlFor="radius" className="block text-lg font-medium">
               Radius
@@ -56,7 +57,6 @@ function App() {
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-  
           <div>
             <label htmlFor="cuisine" className="block text-lg font-medium">
               Cuisine
@@ -71,7 +71,6 @@ function App() {
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-  
           <div>
             <label htmlFor="numRestaurants" className="block text-lg font-medium">
               Number of Restaurants
@@ -87,7 +86,6 @@ function App() {
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-  
           <div className="flex justify-center mt-4">
             <button
               type="button"
@@ -96,11 +94,16 @@ function App() {
             >
               Submit
             </button>
-            
+
           </div>
         </div>
       </div>
-    );
+      <div className='col-span-2 grid p-4'>
+          {/* <h1 className='text-3xl bold'>Search to find a food crawl for you!</h1> */}
+          <YelpCard />
+      </div>
+    </div>
+  );
 }
 
 export default App
