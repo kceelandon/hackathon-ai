@@ -9,8 +9,24 @@ function App() {
     const [radius, setRadius] = useState("");
     const [cuisine, setCuisine] = useState("");
     const [numRestaurants, setNumRestaurants] = useState(1);
-  
-    const handleSubmit = () => {
+    const data = {
+      city:city,
+      radius: radius,
+      cuisine: cuisine, 
+      numRestaurants: numRestaurants
+    }
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      let req = await fetch('http://127.0.0.1:5000/findfood', {
+        method: "POST",
+        headers: {
+                'Content-Type': 'application/json', // Set content type to JSON
+            },
+        body: JSON.stringify(data)
+
+      })
+      let reqData = await req.json()
+      console.log(reqData)
       console.log({
         city,
         radius,
