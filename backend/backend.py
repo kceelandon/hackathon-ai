@@ -4,6 +4,7 @@ from os import environ
 from openai import OpenAI # type: ignore
 from dotenv import load_dotenv # type: ignore
 from flask_cors import CORS # type: ignore
+import yelp_api_client
 app = Flask(__name__)
 CORS(app)
 
@@ -41,10 +42,16 @@ def get_output():
             }
         ],
     )
-    data = {
-        "message": extract_restaurant_names(response.choices[0].message.content)
+    restaurant_names = extract_restaurant_names(response.choices[0].message.content)
+    data = []
+    for name in restaurant_names:
+        params = {"location": location, "name": name}
+        data.append(yelp_api_client.get_data_from_yelp(params=params)["businesses"][0])
+        # appends yelp data
+    lol = {
+        "data": data
     }
-    return  jsonify(data)
+    return jsonify(lol)
 
 
 
