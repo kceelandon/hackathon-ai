@@ -14,3 +14,6 @@ Food Crawlers is your go-to app for planning the ultimate food crawl. Whether yo
 2. We’ll create a personalized list of restaurants to maximize your food crawl experience!  
 
 Start your foodie journey now and discover hidden gems or iconic spots tailored just for you!  
+
+## Demo
+![food crawler screenshot](https://github.com/kceelandon/hackathon-ai/blob/main/foodcrawler.jpg)
